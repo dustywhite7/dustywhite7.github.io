@@ -8,6 +8,7 @@ categories:
 img: data.jpg
 thumb: data.jpg
 
+sidebar_link: true
 tagged: Data, Analytics, MBA, Machine Learning
 website: https://blackboard.unomaha.edu/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1
 ---

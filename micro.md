@@ -8,6 +8,7 @@ categories:
 img: money.jpg
 thumb: money.jpg
 
+sidebar_link: true
 tagged: Microeconomics, Undergraduate
 website: https://blackboard.unomaha.edu/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_1_1
 ---

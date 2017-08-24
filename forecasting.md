@@ -8,6 +8,7 @@ categories:
 img: data.jpg
 thumb: data.jpg
 
+sidebar_link: true
 tagged: Data, Analytics, MBA, Economics, Machine Learning
 website:
 ---
