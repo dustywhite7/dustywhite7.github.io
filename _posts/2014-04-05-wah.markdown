@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "Working From Home"
+date:   2016-04-06 14:55:00
+author: Dusty White
+categories:
+- research
+img: office.jpg
+thumb: office.jpg
+tagged: Working from Home, Selection, Wages, Agency Theory
+website: TBA
+---
+### Agency Theory and the Decision to Work From Home
+The ability of employees to work from home has changed drastically in recent years. Over this time, wages for home-workers have converged toward those of office-workers. I argue that these changes are driven by changes in the ability of firms to monitor employees who work outside of the office.
+
+### Findings
+Using American Community Survey and Census data, I find that changes in wage structure for home-workers are driven primarily by outcomes corresponding to hypotheses derived from the principal-agent model. These results suggest that the primary driver behind changes in the contracts offered to employees working from home is the lowered cost of monitoring employees on the part of the firm.
+
+[Link to paper](https://bitbucket.org/dustywhite7/working-from-home/raw/master/Current%20Draft/article.pdf))
