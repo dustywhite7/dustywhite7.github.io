@@ -4,15 +4,15 @@ highlighter:      rouge
 
 # Setup
 encoding: UTF-8
-title:            Hydeout
-tagline:          'A Jekyll theme'
-description:      'The <a href="http://hyde.getpoole.com" target="_blank">Hyde</a> theme for <a href="http://jekyllrb.com" target="_blank">Jekyll</a>, refreshed.'
-url:              https://fongandrew.github.io/hydeout
+title:            Dustin White
+tagline:          'Department of Economics, UNO'
+description:      
+url:              https://dustinrwhite.com
 baseurl:          # the optional subpath of your site, e.g. "/blog"
 
 author:
-  name:           'Andrew Fong'
-  url:            https://twitter.com/fongandrewc
+  name:           'Dustin White'
+  url:            https://twitter.com/dustywhite7
 
 paginate:         5
 
@@ -25,4 +25,4 @@ plugins:
 version:            3.4.1
 sidebar_home_link:  true
 github:
-  repo:             https://github.com/fongandrew/hydeout
+  repo:             https://github.com/dustywhite7/dustywhite7.github.io
