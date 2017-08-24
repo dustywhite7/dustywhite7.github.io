@@ -6,7 +6,7 @@ highlighter:      rouge
 encoding: UTF-8
 title:            Dustin White
 tagline:          'Department of Economics, UNO'
-description:      
+description:      'Department of Economics, UNO'
 url:              https://dustinrwhite.com
 baseurl:          # the optional subpath of your site, e.g. "/blog"
 
@@ -14,7 +14,7 @@ author:
   name:           'Dustin White'
   url:            https://twitter.com/dustywhite7
 
-paginate:         5
+paginate:         10
 
 plugins:
   - jekyll-feed
