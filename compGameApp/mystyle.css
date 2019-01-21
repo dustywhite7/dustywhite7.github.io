@@ -1,0 +1,43 @@
+@media (max-width: 600px) {
+
+.title {
+    color: dimgray;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 28pt;
+    font-family: 'Titillium Web', sans-serif;    
+    width: 75%;
+  }
+
+.students, .industry {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-family: 'Titillium Web', sans-serif;   
+    font-size: 16pt;
+    width: 75%;
+}
+}
+
+@media (min-width: 600px) {
+
+.title {
+    color: dimgray;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 28pt;
+    font-family: 'Titillium Web', sans-serif;
+  }
+
+.students, .industry {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 16pt;
+}
+}
+
+.space {
+    margin-top: 30px;
+    font-size: 28pt;
+    
+}
