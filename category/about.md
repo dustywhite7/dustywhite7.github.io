@@ -1,7 +1,7 @@
 ---
 layout: category
 title: About
-sidebar_link: true
+sidebar_link: false
 ---
 
 ### About Me
