@@ -103,6 +103,12 @@ view model =
             , text "Producers in Banana Market: "
             , input [ placeholder "Students in Industry 3", value model.q3, onInput UpdateQ3 ] []
             , div [] [ text ("Banana Profit: " ++ (Round.round 0 ( (3/4) * (Maybe.withDefault 0 (String.toFloat model.n)) - (Maybe.withDefault 0 (String.toFloat model.q3))) ) ) ]
+            , div [classList [
+              ("space", True)
+            ]] [ br [] [] ]
     ]
-
+    , div [classList [
+        ("industry", True)]] [text "n = total number of students"]
+    , div [classList [
+        ("industry", True)]] [text "x = number of students in market"]
     ]
