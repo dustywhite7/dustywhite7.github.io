@@ -22,6 +22,13 @@
     font-size: 28pt;
     
 }
+
+input {
+    width: 75%;
+    height: 32pt;
+    font-size: 24pt;
+    font-family: 'Titillium Web', sans-serif;
+}
 }
 
 @media (min-width: 1000px) {
@@ -40,10 +47,18 @@
     font-family: 'Titillium Web', sans-serif;
     font-size: 16pt;
 }
-}
 
 .space {
     margin-top: 30px;
     font-size: 28pt;
     
+}
+
+input {
+    width: 400px;
+    height: 20pt;
+    font-size: 20pt;
+    font-family: 'Titillium Web', sans-serif;
+}
+
 }
