@@ -16,4 +16,4 @@ We study the effect of state-level merit aid programs (such as Georgia’s HOPE 
 ### Findings
 We find that the presence of a merit aid program in one’s state generally leads to an overall increase in (heavy) drinking. This effect is concentrated among men, students with lower parental education, older students, and students with high college GPA’s. Our findings are robust to several alternative empirical specifications including event-study analyses by year of program adoption. Furthermore, no difference in high-school drinking is observed for students attending college in states with merit-aid programs
 
-[Link to paper](http://faculty.ses.wsu.edu/cowan/research/merit_aid.pdf)
+[Link to paper](https://faculty.ses.wsu.edu/cowan/research/merit_aid.pdf)
