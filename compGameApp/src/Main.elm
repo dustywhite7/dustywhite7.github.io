@@ -38,20 +38,21 @@ init =
 
 
 type Msg
-  = UpdateN String | UpdateQ1 String | UpdateQ2 String | UpdateQ3 String
+  = UpdateQ1 String | UpdateQ2 String | UpdateQ3 String
 
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    UpdateN newN ->
-      { model | n = newN }
     UpdateQ1 newQ1 ->
-      { model | q1 = newQ1 }
+      { model | q1 = newQ1
+              , n = Round.round 0 (Maybe.withDefault 0 (String.toFloat newQ1) + Maybe.withDefault 0 (String.toFloat model.q2) + Maybe.withDefault 0 (String.toFloat model.q3)) }
     UpdateQ2 newQ2 ->
-      { model | q2 = newQ2 }
+      { model | q2 = newQ2
+              , n = Round.round 0 (Maybe.withDefault 0 (String.toFloat model.q1) + Maybe.withDefault 0 (String.toFloat newQ2) + Maybe.withDefault 0 (String.toFloat model.q3)) }
     UpdateQ3 newQ3 ->
-      { model | q3 = newQ3 }
+      { model | q3 = newQ3
+              , n = Round.round 0 (Maybe.withDefault 0 (String.toFloat model.q1) + Maybe.withDefault 0 (String.toFloat model.q2) + Maybe.withDefault 0 (String.toFloat newQ3)) }
 
 
 
@@ -69,7 +70,7 @@ view model =
         ("students", True)
         , ("invalid", (Maybe.withDefault 0 (String.toFloat model.n)) > 0 )
     ]] [text "Number of Participants: "
-            , input [ placeholder "Total Number of Students", value model.n, onInput UpdateN ] []
+            , div [] [ text (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n)))) ]
             , div [classList [
         ("space", True)
     ]] [ br [] [] ]
