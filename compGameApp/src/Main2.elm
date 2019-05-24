@@ -127,9 +127,9 @@ view model =
                 , ("invalid", (Maybe.withDefault 0 (String.toFloat model.n)) > 0 )
             ]] [Html.h4 [] [text "Number of Participants: "]
                     , div [] [ Html.h4 [] [text (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n)))) ]]
-                    , div [classList [
-                ("space", True)
-            ]] [ br [] [] ]
+            --         , div [classList [
+            --     ("space", True)
+            -- ]] [ br [] [] ]
             ] 
             , div [classList [
                 ("industry", True)
@@ -159,8 +159,9 @@ view model =
                     , div [] [ text ("Banana Profit: " ++ model.p3 ) ]
             ]
             , div [classList [
-                ("button", True)]] [Button.button [ Button.success, Button.onClick Increment, Button.attrs [ Spacing.ml1 ] ] [ text "Record Scores" ], 
-                                    Button.button [ Button.danger, Button.onClick Clear, Button.attrs [Spacing.ml1 ] ] [ text "Clear Scores" ]]
+                ("button", True)]] [ br [] []
+                                     , Button.button [ Button.success, Button.onClick Increment, Button.attrs [ Spacing.ml1 ] ] [ text "Record Scores" ]
+                                     , Button.button [ Button.danger, Button.onClick Clear, Button.attrs [Spacing.ml1 ] ] [ text "Clear Scores" ]]
         ]
     , Grid.col [ Col.sm ] [
         Table.table
