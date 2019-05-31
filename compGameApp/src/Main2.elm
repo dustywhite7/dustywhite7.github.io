@@ -29,13 +29,13 @@ main =
 
 
 type alias Model =
-  { n : String
-  , q1 : String
-  , q2 : String
-  , q3 : String
-  , p1 : String
-  , p2 : String
-  , p3 : String
+  { n : Int
+  , q1 : Int
+  , q2 : Int
+  , q3 : Int
+  , p1 : Int
+  , p2 : Int
+  , p3 : Int
   , record : List (Table.Row Msg)
   , period : Int
   }
@@ -43,13 +43,13 @@ type alias Model =
 
 init : Model
 init =
-  { n = ""
-  , q1 = ""
-  , q2 = ""
-  , q3 = ""
-  , p1 = ""
-  , p2 = ""
-  , p3 = ""
+  { n = 0
+  , q1 = 0
+  , q2 = 0
+  , q3 = 0
+  , p1 = 0
+  , p2 = 0
+  , p3 = 0
   , record = tRows
   , period = 1
   }
@@ -67,46 +67,53 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     UpdateQ1 newQ1 ->
-      { model | q1 = newQ1
-              , n = Round.round 0 (Maybe.withDefault 0 (String.toFloat newQ1) + Maybe.withDefault 0 (String.toFloat model.q2) + Maybe.withDefault 0 (String.toFloat model.q3))
-              , p1 = (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n)) * sqrt (5/(Maybe.withDefault 0 (String.toFloat model.q1))) - (Maybe.withDefault 0 (String.toFloat model.n))/2) ) 
-              , p2 = (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n))/20 * cos ((pi/(Maybe.withDefault 0 (String.toFloat model.n))) * (Maybe.withDefault 0 (String.toFloat model.q2)) ) + (Maybe.withDefault 0 (String.toFloat model.n))/20 ) ) 
-              , p3 = (Round.round 0 ( (3/4) * (Maybe.withDefault 0 (String.toFloat model.n)) - (Maybe.withDefault 0 (String.toFloat model.q3))) ) }
+      { model | q1 = Maybe.withDefault 0 (String.toInt newQ1)
+              , n = Maybe.withDefault 0 (String.toInt newQ1) + model.q2 + model.q3
+              , p1 = round ((0.3 * toFloat model.n) * (1.0 / toFloat (Maybe.withDefault 0 (String.toInt newQ1))) - 1.0)
+              , p2 = round ((0.5 * toFloat model.n) - (toFloat model.q2))
+              , p3 = round ((1/25) * toFloat model.n^2 - toFloat model.q3^2)
+              }
+
     UpdateQ2 newQ2 ->
-      { model | q2 = newQ2
-              , n = Round.round 0 (Maybe.withDefault 0 (String.toFloat model.q1) + Maybe.withDefault 0 (String.toFloat newQ2) + Maybe.withDefault 0 (String.toFloat model.q3))
-              , p1 = (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n)) * sqrt (5/(Maybe.withDefault 0 (String.toFloat model.q1))) - (Maybe.withDefault 0 (String.toFloat model.n))/2) ) 
-              , p2 = (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n))/20 * cos ((pi/(Maybe.withDefault 0 (String.toFloat model.n))) * (Maybe.withDefault 0 (String.toFloat model.q2)) ) + (Maybe.withDefault 0 (String.toFloat model.n))/20 ) ) 
-              , p3 = (Round.round 0 ( (3/4) * (Maybe.withDefault 0 (String.toFloat model.n)) - (Maybe.withDefault 0 (String.toFloat model.q3))) ) }
+      { model | q2 = Maybe.withDefault 0 (String.toInt newQ2)
+              , n = model.q1 + Maybe.withDefault 0 (String.toInt newQ2) + model.q3
+              , p1 = round ((0.3 * toFloat model.n) * (1.0 / toFloat model.q1) - 1.0)
+              , p2 = round ((0.5 * toFloat model.n) - (toFloat (Maybe.withDefault 0 (String.toInt newQ2))))
+              , p3 = round ((1/25) * toFloat model.n^2 - toFloat model.q3^2)
+              }
+
     UpdateQ3 newQ3 ->
-      { model | q3 = newQ3
-              , n = Round.round 0 (Maybe.withDefault 0 (String.toFloat model.q1) + Maybe.withDefault 0 (String.toFloat model.q2) + Maybe.withDefault 0 (String.toFloat newQ3))
-              , p1 = (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n)) * sqrt (5/(Maybe.withDefault 0 (String.toFloat model.q1))) - (Maybe.withDefault 0 (String.toFloat model.n))/2) ) 
-              , p2 = (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n))/20 * cos ((pi/(Maybe.withDefault 0 (String.toFloat model.n))) * (Maybe.withDefault 0 (String.toFloat model.q2)) ) + (Maybe.withDefault 0 (String.toFloat model.n))/20 ) ) 
-              , p3 = (Round.round 0 ( (3/4) * (Maybe.withDefault 0 (String.toFloat model.n)) - (Maybe.withDefault 0 (String.toFloat model.q3))) ) }
+      { model | q3 = Maybe.withDefault 0 (String.toInt newQ3)
+              , n = model.q1 + model.q2 + Maybe.withDefault 0 (String.toInt newQ3)
+              , p1 = round ((0.3 * toFloat model.n) * (1.0 / toFloat model.q1) - 1.0)
+              , p2 = round ((0.5 * toFloat model.n) - (toFloat model.q2))
+              , p3 = round ((1/25) * toFloat model.n^2 - toFloat (Maybe.withDefault 0 (String.toInt newQ3))^2)
+              }
+
     Increment ->
       { model | record = model.record ++ [ 
-          Table.tr []
-            [ Table.td [] [text (String.fromInt model.period)]
-            , Table.td [] [text model.p1]
-            , Table.td [] [text model.p2]
-            , Table.td [] [text model.p3]
-            , Table.td [] [text model.q1]
-            , Table.td [] [text model.q2]    
-            , Table.td [] [text model.q3]
-            ]
-      ]
+                  Table.tr []
+                    [ Table.td [] [text (String.fromInt model.period)]
+                    , Table.td [] [text (String.fromInt (round ((0.3 * toFloat model.n) * (1.0 / toFloat model.q1) - 1.0) ) )]
+                    , Table.td [] [text (String.fromInt (round ((0.5 * toFloat model.n) - (toFloat model.q2))))]
+                    , Table.td [] [text (String.fromInt (round ((1/25) * toFloat model.n^2 - toFloat model.q3^2)))]
+                    , Table.td [] [text (String.fromInt model.q1)]
+                    , Table.td [] [text (String.fromInt model.q2)]    
+                    , Table.td [] [text (String.fromInt model.q3)]
+                    ]
+                  ]
               , period = model.period + 1}
+
     Clear ->
       { model | record = tRows
               , period = 1
-              , q1 = ""
-              , q2 = ""
-              , q3 = ""
-              , n = ""
-              , p1 = ""
-              , p2 = ""
-              , p3 = "" } 
+              , q1 = 0
+              , q2 = 0
+              , q3 = 0
+              , n = 0
+              , p1 = 0
+              , p2 = 0
+              , p3 = 0 } 
 
 -- VIEW
 
@@ -124,39 +131,39 @@ view model =
         Grid.col [ Col.sm ] [
             div [classList [
                 ("students", True)
-                , ("invalid", (Maybe.withDefault 0 (String.toFloat model.n)) > 0 )
+                , ("invalid", (model.n) > 0 )
             ]] [Html.h4 [] [text "Number of Participants: "]
-                    , div [] [ Html.h4 [] [text (Round.round 0 ( (Maybe.withDefault 0 (String.toFloat model.n)))) ]]
+                    , div [] [ Html.h4 [] [text (String.fromInt model.n) ]]
             --         , div [classList [
             --     ("space", True)
             -- ]] [ br [] [] ]
             ] 
             , div [classList [
                 ("industry", True)
-                , ("invalid", (Maybe.withDefault 0 (String.toFloat model.q1)) > 0 )
+                , ("invalid", model.q1 > 0 )
             ]] [--div [] [img [src "apples.png", width 300] [] ]
                     --, 
                     text "Producers in Apple Market: "
-                    , Input.text [ Input.attrs [placeholder "Students in Apple Market", value model.q1] , Input.onInput UpdateQ1 ] 
-                    , div [] [ text ("Apple Profit: " ++ model.p1 )  ]
+                    , Input.number [ Input.id "apple", Input.attrs [placeholder "Students in Apple Market", value (String.fromInt model.q1)] , Input.onInput UpdateQ1 ] 
+                    , div [] [ text ("Apple Profit: " ++ String.fromInt (round ((0.3 * toFloat model.n) * (1.0 / toFloat model.q1) - 1.0) ) ) ]
             ]
             , div [classList [
                 ("industry", True)
-                , ("invalid", (Maybe.withDefault 0 (String.toFloat model.q2)) > 0 )
+                , ("invalid", model.q2 > 0 )
             ]] [--div [] [img [src "oranges.png", width 300] [] ]
                     --, 
                     text "Producers in Orange Market: "
-                    , Input.text [ Input.attrs [placeholder "Students in Orange Market", value model.q2] , Input.onInput UpdateQ2 ]
-                    , div [] [ text ("Orange Profit: " ++ model.p2 ) ]
+                    , Input.number [ Input.id "orange", Input.attrs [placeholder "Students in Orange Market", value (String.fromInt model.q2)] , Input.onInput UpdateQ2 ]
+                    , div [] [ text ("Orange Profit: " ++ String.fromInt (round ((0.5 * toFloat model.n) - (toFloat model.q2))) ) ]
             ]
             , div [classList [
                 ("industry", True)
-                , ("invalid", (Maybe.withDefault 0 (String.toFloat model.q3)) > 0 )
+                , ("invalid", model.q3 > 0 )
             ]] [--div [] [img [src "bananas.png", width 300] [] ]
                     --, 
                     text "Producers in Banana Market: "
-                    , Input.text [ Input.attrs [placeholder "Students in Banana Market", value model.q3], Input.onInput UpdateQ3 ]
-                    , div [] [ text ("Banana Profit: " ++ model.p3 ) ]
+                    , Input.number [ Input.id "banana", Input.attrs [placeholder "Students in Banana Market", value (String.fromInt model.q3)], Input.onInput UpdateQ3 ]
+                    , div [] [ text ("Banana Profit: " ++ String.fromInt (round ((1/25) * toFloat model.n^2 - toFloat model.q3^2)) ) ]
             ]
             , div [classList [
                 ("button", True)]] [ br [] []
@@ -179,34 +186,13 @@ view model =
                 Table.tbody []
                     model.record
             }
-    --     div [classList [
-    --   ("textTable", True)]] [ br [] []
-    --   , Table.view config model.pTable model.record ]
+
     ]
     ]
         
 
     ]
   
-
--- config : Table.Config OneRound Msg
--- config =
---   Table.config
---     { columns = 
---       [ Table.stringColumn "Round" .roundNo
---       , Table.stringColumn "Profit Apples" .p1
---       , Table.stringColumn "Profit Oranges" .p2
---       , Table.stringColumn "Profit Bananas" .p3
---       , Table.stringColumn "# Apples" .q1
---       , Table.stringColumn "# Oranges" .q2
---       , Table.stringColumn "# Bananas" .q3
-
---       ]
---     , toId = .roundNo
---     , toMsg = SetTableState
-
---     }
-
 
 -- TABLE SPECS
 
