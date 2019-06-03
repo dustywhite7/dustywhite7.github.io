@@ -4402,11 +4402,8 @@ var elm$core$Set$toList = function (_n0) {
 };
 var author$project$Main$tRows = _List_Nil;
 var author$project$Main$init = {n: '0', period: 1, q1: '', q2: '', q3: '', record: author$project$Main$tRows};
-var elm$core$Basics$add = _Basics_add;
-var elm$core$Basics$append = _Utils_append;
 var elm$core$Basics$fdiv = _Basics_fdiv;
 var elm$core$Basics$mul = _Basics_mul;
-var elm$core$Basics$pow = _Basics_pow;
 var elm$core$Basics$round = _Basics_round;
 var elm$core$Basics$sub = _Basics_sub;
 var elm$core$Basics$toFloat = _Basics_toFloat;
@@ -4423,8 +4420,54 @@ var elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
 var elm$core$Maybe$Nothing = {$: 'Nothing'};
-var elm$core$String$fromInt = _String_fromNumber;
 var elm$core$String$toInt = _String_toInt;
+var author$project$Main$getP1 = F2(
+	function (q1, total) {
+		return elm$core$Basics$round(
+			((0.3 * A2(
+				elm$core$Maybe$withDefault,
+				0,
+				elm$core$String$toInt(total))) * (1.0 / A2(
+				elm$core$Maybe$withDefault,
+				0,
+				elm$core$String$toInt(q1)))) - 1.0);
+	});
+var author$project$Main$getP2 = F2(
+	function (q2, total) {
+		return elm$core$Basics$round(
+			(0.5 * A2(
+				elm$core$Maybe$withDefault,
+				0,
+				elm$core$String$toInt(total))) - A2(
+				elm$core$Maybe$withDefault,
+				0,
+				elm$core$String$toInt(q2)));
+	});
+var elm$core$Basics$pow = _Basics_pow;
+var author$project$Main$getP3 = F2(
+	function (q3, total) {
+		return elm$core$Basics$round(
+			((1 / 25) * A2(
+				elm$core$Basics$pow,
+				A2(
+					elm$core$Maybe$withDefault,
+					0,
+					elm$core$String$toInt(total)),
+				2)) - A2(
+				elm$core$Basics$pow,
+				A2(
+					elm$core$Maybe$withDefault,
+					0,
+					elm$core$String$toInt(q3)),
+				2));
+	});
+var elm$core$Basics$add = _Basics_add;
+var elm$core$Basics$append = _Utils_append;
+var elm$core$Basics$gt = _Utils_gt;
+var elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var elm$core$String$fromInt = _String_fromNumber;
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4532,7 +4575,6 @@ var elm$core$Basics$apL = F2(
 		return f(x);
 	});
 var elm$core$Basics$floor = _Basics_floor;
-var elm$core$Basics$gt = _Utils_gt;
 var elm$core$Basics$max = F2(
 	function (x, y) {
 		return (_Utils_cmp(x, y) > 0) ? x : y;
@@ -4942,15 +4984,9 @@ var author$project$Main$update = F2(
 											_List_fromArray(
 												[
 													elm$html$Html$text(
-													elm$core$String$fromInt(
-														elm$core$Basics$round(
-															((0.3 * A2(
-																elm$core$Maybe$withDefault,
-																0,
-																elm$core$String$toInt(model.n))) * (1.0 / A2(
-																elm$core$Maybe$withDefault,
-																0,
-																elm$core$String$toInt(model.q1)))) - 1.0)))
+													(A2(author$project$Main$getP1, model.q1, model.n) > 0) ? ('$' + elm$core$String$fromInt(
+														A2(author$project$Main$getP1, model.q1, model.n))) : ('-$' + elm$core$String$fromInt(
+														(-1) * A2(author$project$Main$getP1, model.q1, model.n))))
 												])),
 											A2(
 											rundis$elm_bootstrap$Bootstrap$Table$td,
@@ -4958,15 +4994,9 @@ var author$project$Main$update = F2(
 											_List_fromArray(
 												[
 													elm$html$Html$text(
-													elm$core$String$fromInt(
-														elm$core$Basics$round(
-															(0.5 * A2(
-																elm$core$Maybe$withDefault,
-																0,
-																elm$core$String$toInt(model.n))) - A2(
-																elm$core$Maybe$withDefault,
-																0,
-																elm$core$String$toInt(model.q2)))))
+													(A2(author$project$Main$getP2, model.q2, model.n) > 0) ? ('$' + elm$core$String$fromInt(
+														A2(author$project$Main$getP2, model.q2, model.n))) : ('-$' + elm$core$String$fromInt(
+														(-1) * A2(author$project$Main$getP2, model.q2, model.n))))
 												])),
 											A2(
 											rundis$elm_bootstrap$Bootstrap$Table$td,
@@ -4974,21 +5004,9 @@ var author$project$Main$update = F2(
 											_List_fromArray(
 												[
 													elm$html$Html$text(
-													elm$core$String$fromInt(
-														elm$core$Basics$round(
-															((1 / 25) * A2(
-																elm$core$Basics$pow,
-																A2(
-																	elm$core$Maybe$withDefault,
-																	0,
-																	elm$core$String$toInt(model.n)),
-																2)) - A2(
-																elm$core$Basics$pow,
-																A2(
-																	elm$core$Maybe$withDefault,
-																	0,
-																	elm$core$String$toInt(model.q3)),
-																2))))
+													(A2(author$project$Main$getP3, model.q3, model.n) > 0) ? ('$' + elm$core$String$fromInt(
+														A2(author$project$Main$getP3, model.q3, model.n))) : ('-$' + elm$core$String$fromInt(
+														(-1) * A2(author$project$Main$getP3, model.q3, model.n))))
 												])),
 											A2(
 											rundis$elm_bootstrap$Bootstrap$Table$td,
@@ -7092,17 +7110,12 @@ var author$project$Main$view = function (model) {
 										_List_fromArray(
 											[
 												elm$html$Html$text(
-												'Apple Profit: ' + elm$core$String$fromInt(
-													elm$core$Basics$round(
-														((0.3 * A2(
-															elm$core$Maybe$withDefault,
-															0,
-															elm$core$String$toInt(model.n))) * (1.0 / A2(
-															elm$core$Maybe$withDefault,
-															0,
-															elm$core$String$toInt(model.q1)))) - 1.0)))
+												'Apple Profit: ' + ((A2(author$project$Main$getP1, model.q1, model.n) > 0) ? ('$' + elm$core$String$fromInt(
+													A2(author$project$Main$getP1, model.q1, model.n))) : ('-$' + elm$core$String$fromInt(
+													(-1) * A2(author$project$Main$getP1, model.q1, model.n)))))
 											]))
 									])),
+								A2(elm$html$Html$br, _List_Nil, _List_Nil),
 								A2(
 								elm$html$Html$div,
 								_List_Nil,
@@ -7127,17 +7140,12 @@ var author$project$Main$view = function (model) {
 										_List_fromArray(
 											[
 												elm$html$Html$text(
-												'Orange Profit: ' + elm$core$String$fromInt(
-													elm$core$Basics$round(
-														(0.5 * A2(
-															elm$core$Maybe$withDefault,
-															0,
-															elm$core$String$toInt(model.n))) - A2(
-															elm$core$Maybe$withDefault,
-															0,
-															elm$core$String$toInt(model.q2)))))
+												'Orange Profit: ' + ((A2(author$project$Main$getP2, model.q2, model.n) > 0) ? ('$' + elm$core$String$fromInt(
+													A2(author$project$Main$getP2, model.q2, model.n))) : ('-$' + elm$core$String$fromInt(
+													(-1) * A2(author$project$Main$getP2, model.q2, model.n)))))
 											]))
 									])),
+								A2(elm$html$Html$br, _List_Nil, _List_Nil),
 								A2(
 								elm$html$Html$div,
 								_List_Nil,
@@ -7162,23 +7170,12 @@ var author$project$Main$view = function (model) {
 										_List_fromArray(
 											[
 												elm$html$Html$text(
-												'Banana Profit: ' + elm$core$String$fromInt(
-													elm$core$Basics$round(
-														((1 / 25) * A2(
-															elm$core$Basics$pow,
-															A2(
-																elm$core$Maybe$withDefault,
-																0,
-																elm$core$String$toInt(model.n)),
-															2)) - A2(
-															elm$core$Basics$pow,
-															A2(
-																elm$core$Maybe$withDefault,
-																0,
-																elm$core$String$toInt(model.q3)),
-															2))))
+												'Banana Profit: ' + ((A2(author$project$Main$getP3, model.q3, model.n) > 0) ? ('$' + elm$core$String$fromInt(
+													A2(author$project$Main$getP3, model.q3, model.n))) : ('-$' + elm$core$String$fromInt(
+													(-1) * A2(author$project$Main$getP3, model.q3, model.n)))))
 											]))
 									])),
+								A2(elm$html$Html$br, _List_Nil, _List_Nil),
 								A2(
 								elm$html$Html$div,
 								_List_fromArray(
