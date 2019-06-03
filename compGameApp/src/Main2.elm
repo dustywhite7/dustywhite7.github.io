@@ -82,9 +82,9 @@ update msg model =
       { model | record = model.record ++ [ 
                   Table.tr []
                     [ Table.td [] [text (String.fromInt model.period)]
-                    , Table.td [] [text (String.fromInt (round ((0.3 * toFloat (Maybe.withDefault 0 (String.toInt model.n)) * (1.0 / toFloat (Maybe.withDefault 0 (String.toInt model.q1))) - 1.0) ) ) ) ]
-                    , Table.td [] [text (String.fromInt (round ((0.5 * toFloat (Maybe.withDefault 0 (String.toInt model.n))) - (toFloat (Maybe.withDefault 0 (String.toInt model.q2)))) ) )]
-                    , Table.td [] [text (String.fromInt (round ((1/25) * toFloat (Maybe.withDefault 0 (String.toInt model.n))^2 - toFloat (Maybe.withDefault 0 (String.toInt model.q3))^2)))]
+                    , Table.td [] [text (if (getP1 model.q1 model.n) > 0 then "$" ++ String.fromInt (getP1 model.q1 model.n) else "-$" ++ String.fromInt (-1 * getP1 model.q1 model.n) )]
+                    , Table.td [] [text (if (getP2 model.q2 model.n) > 0 then "$" ++ String.fromInt (getP2 model.q2 model.n) else "-$" ++ String.fromInt (-1 * getP2 model.q2 model.n))]
+                    , Table.td [] [text (if (getP3 model.q3 model.n) > 0 then "$" ++ String.fromInt (getP3 model.q3 model.n) else "-$" ++ String.fromInt (-1 * getP3 model.q3 model.n))]
                     , Table.td [] [text model.q1]
                     , Table.td [] [text model.q2]    
                     , Table.td [] [text model.q3]
@@ -125,20 +125,29 @@ view model =
                     --, 
                     text "Producers in Apple Market: "
                     , Input.number [ Input.id "apple", Input.attrs [placeholder "Students in Apple Market", value model.q1] , Input.onInput UpdateQ1 ] 
-                    , div [] [ text ("Apple Profit: " ++ (String.fromInt (round ((0.3 * toFloat (Maybe.withDefault 0 (String.toInt model.n)) * (1.0 / toFloat (Maybe.withDefault 0 (String.toInt model.q1))) - 1.0) ) ) ) ) ]
+                    , div [] [ text ("Apple Profit: " ++ (if (getP1 model.q1 model.n) > 0 then "$" ++ String.fromInt (getP1 model.q1 model.n) else "-$" ++ String.fromInt (-1 * getP1 model.q1 model.n) ) ) 
+                    
+                    ]
             ]
+            , br [] []
             , div [] [--div [] [img [src "oranges.png", width 300] [] ]
                     --, 
                     text "Producers in Orange Market: "
                     , Input.number [ Input.id "orange", Input.attrs [placeholder "Students in Orange Market", value model.q2] , Input.onInput UpdateQ2 ]
-                    , div [] [ text ("Orange Profit: " ++ (String.fromInt (round ((0.5 * toFloat (Maybe.withDefault 0 (String.toInt model.n))) - (toFloat (Maybe.withDefault 0 (String.toInt model.q2)))) ) ) ) ]
+                    , div [] [ text ("Orange Profit: " ++ (if (getP2 model.q2 model.n) > 0 then "$" ++ String.fromInt (getP2 model.q2 model.n) else "-$" ++ String.fromInt (-1 * getP2 model.q2 model.n)) )
+                    
+                    ]
             ]
+            , br [] []
             , div [] [--div [] [img [src "bananas.png", width 300] [] ]
                     --, 
                     text "Producers in Banana Market: "
                     , Input.number [ Input.id "banana", Input.attrs [placeholder "Students in Banana Market", value model.q3], Input.onInput UpdateQ3 ]
-                    , div [] [ text ("Banana Profit: " ++ (String.fromInt (round ((1/25) * toFloat (Maybe.withDefault 0 (String.toInt model.n))^2 - toFloat (Maybe.withDefault 0 (String.toInt model.q3))^2))) ) ]
+                    , div [] [ text ("Banana Profit: " ++ (if (getP3 model.q3 model.n) > 0 then "$" ++ String.fromInt (getP3 model.q3 model.n) else "-$" ++ String.fromInt (-1 * getP3 model.q3 model.n)) )
+                    
+                    ]
             ]
+            , br [] []
             , div [classList [
                 ("button", True)]] [ br [] []
                                      , Button.button [ Button.success, Button.onClick Increment, Button.attrs [ Spacing.ml1 ] ] [ text "Record Scores" ]
@@ -176,3 +185,18 @@ view model =
 tRows : List (Table.Row msg)
 tRows = 
   []
+
+
+-- FUNCTIONS FOR PROFIT
+
+getP1 : String -> String -> Int 
+getP1 q1 total = 
+  round ((0.3 * toFloat (Maybe.withDefault 0 (String.toInt total)) * (1.0 / toFloat (Maybe.withDefault 0 (String.toInt q1))) - 1.0) )
+
+getP2 : String -> String -> Int 
+getP2 q2 total = 
+  round ((0.5 * toFloat (Maybe.withDefault 0 (String.toInt total))) - (toFloat (Maybe.withDefault 0 (String.toInt q2)))) 
+
+getP3 : String -> String -> Int 
+getP3 q3 total = 
+  round ((1/25) * toFloat (Maybe.withDefault 0 (String.toInt total))^2 - toFloat (Maybe.withDefault 0 (String.toInt q3))^2)
