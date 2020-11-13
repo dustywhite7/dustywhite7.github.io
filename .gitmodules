@@ -1,0 +1,3 @@
+[submodule "moneyball-webapp"]
+	path = moneyball-webapp
+	url = https://github.com/dustywhite7/moneyball-webapp
